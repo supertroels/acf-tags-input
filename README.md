@@ -1,4 +1,2 @@
-ACF-Tags-input
+Tags input for Advanced Custom Fields
 ==============
-
-Tags-like input field add-on for ACF wordpress plugin.
