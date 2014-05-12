@@ -113,7 +113,7 @@ class acf_field_tags_input extends acf_field {
 		// create Field HTML
 		?>
 		<div>
-			<input type="text" placeholder="<?php echo $field['placeholder_text'] ?>" id="<?php echo $field['key']; ?>" class="<?php echo $field['class']; ?>" name="<?php echo $field['name']; ?>" value="<?php echo $field['value']; ?>" />
+			<input type="text" placeholder="<?php echo $field['placeholder_text'] ?>" id="<?php echo $field['key']; ?>" class="<?php echo $field['class']; ?>" name="<?php echo $field['name']; ?>" value="<?php echo $field['value'] ?>" />
 		</div>
 		<?php
 	}
@@ -231,7 +231,6 @@ class acf_field_tags_input extends acf_field {
 	
 	function load_value( $value, $post_id, $field )
 	{
-		// Note: This function can be removed if not used
 		return $value;
 	}
 	
@@ -254,7 +253,7 @@ class acf_field_tags_input extends acf_field {
 	
 	function update_value( $value, $post_id, $field )
 	{
-		// Note: This function can be removed if not used
+		$value = array_map('trim', explode(',', $value));
 		return $value;
 	}
 	
@@ -277,15 +276,7 @@ class acf_field_tags_input extends acf_field {
 	
 	function format_value( $value, $post_id, $field )
 	{
-		// defaults?
-		/*
-		$field = array_merge($this->defaults, $field);
-		*/
-		
-		// perhaps use $field['preview_size'] to alter the $value?
-		
-		
-		// Note: This function can be removed if not used
+		$value = implode(',', $value);
 		return $value;
 	}
 	
