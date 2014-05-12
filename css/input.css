@@ -1,11 +1,26 @@
 .tagsinput {
   width: 100% !important;
-  height: auto !important; }
+  height: auto !important;
+  padding-bottom: 0px !important; }
   .tagsinput div[id$="cb_addTag"] input {
+    padding: 3px 6px !important;
+    padding-left: 0px !important;
     width: 200px !important; }
   .tagsinput .tag {
     border-color: #c5c5c5 !important;
     color: #666666 !important;
-    background-color: #ececec !important; }
+    background-color: #ececec !important;
+    padding: 0px 6px !important; }
     .tagsinput .tag a {
-      color: inherit !important; }
+      color: transparent !important;
+      display: inline-block; }
+      .tagsinput .tag a:before {
+        display: inline-block;
+        font-family: 'dashicons';
+        color: #777777;
+        content: '\f158';
+        height: 0px;
+        width: 0px;
+        position: relative;
+        left: -3px;
+        top: 2px; }
