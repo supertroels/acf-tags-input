@@ -1,2 +1,3 @@
-Tags input for Advanced Custom Fields
-==============
+# ACF : Tags input
+
+Tags input field for ACF

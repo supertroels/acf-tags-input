@@ -1,0 +1,11 @@
+.tagsinput {
+  width: 100% !important;
+  height: auto !important; }
+  .tagsinput div[id$="cb_addTag"] input {
+    width: 200px !important; }
+  .tagsinput .tag {
+    border-color: #c5c5c5 !important;
+    color: #666666 !important;
+    background-color: #ececec !important; }
+    .tagsinput .tag a {
+      color: inherit !important; }
