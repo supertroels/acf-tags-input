@@ -18,49 +18,24 @@ class acf_field_tags_input extends acf_field {
 	
 	function __construct() {
 		
-		/*
-		*  name (string) Single word, no spaces. Underscores allowed
-		*/
-		
+		// vars
 		$this->name = 'tags_input';
-		
-		
-		/*
-		*  label (string) Multiple words, can include spaces, visible when selecting a field type
-		*/
-		
-		$this->label = __('Tags input', 'acf-tags_input');
-		
-		
-		/*
-		*  category (string) basic | content | choice | relational | jquery | layout | CUSTOM GROUP NAME
-		*/
-		
-		$this->category = 'basic';
-		
-		
-		/*
-		*  defaults (array) Array of default settings which are merged into the field object. These are used later in settings
-		*/
-		
+		$this->label = __('Tags input');
+		$this->category = __("Basic",'acf'); // Basic, Content, Choice, etc
 		$this->defaults = array(
-			'font_size'	=> 14,
-		);
-		
-		
-		/*
-		*  l10n (array) Array of strings that are used in JavaScript. This allows JS strings to be translated in PHP and loaded via:
-		*  var message = acf._e('tags_input', 'error');
-		*/
-		
-		$this->l10n = array(
-			'error'	=> __('Error! Please enter a higher value', 'acf-tags_input'),
+			'placeholder_text' => __('Add tag')
 		);
 		
 				
 		// do not delete!
     	parent::__construct();
-    	
+    	  
+    	// settings
+		$this->settings = array(
+			'path' 	=> WP_CONTENT_DIR.'/plugins/acf-tags-input/',
+			'dir' 	=> WP_CONTENT_URL.'/plugins/acf-tags-input/',
+			'version' => '1.0.0'
+		);
 	}
 	
 	
@@ -90,11 +65,10 @@ class acf_field_tags_input extends acf_field {
 		*/
 		
 		acf_render_field_setting( $field, array(
-			'label'			=> __('Font Size','acf-tags_input'),
-			'instructions'	=> __('Customise the input font size','acf-tags_input'),
-			'type'			=> 'number',
-			'name'			=> 'font_size',
-			'prepend'		=> 'px',
+
+			'type'		=> 'text',
+			'name'		=> 'placeholder_text',
+			'label'		=> 'Placeholder text',
 		));
 
 	}
@@ -117,24 +91,13 @@ class acf_field_tags_input extends acf_field {
 	*/
 	
 	function render_field( $field ) {
-		
-		
-		/*
-		*  Review the data of $field.
-		*  This will show what data is available
-		*/
-		
-		echo '<pre>';
-			print_r( $field );
-		echo '</pre>';
-		
-		
-		/*
-		*  Create a simple text input using the 'font_size' setting.
-		*/
-		
+
+		$field['value'] = implode(',', $field['value']);
+	
 		?>
-		<input type="text" name="<?php echo esc_attr($field['name']) ?>" value="<?php echo esc_attr($field['value']) ?>" style="font-size:<?php echo $field['font_size'] ?>px;" />
+		<div>
+			<input type="text" placeholder="<?php echo $field['placeholder_text'] ?>" id="<?php echo $field['key']; ?>" class="tags_input <?php echo $field['class']; ?>" name="<?php echo $field['name']; ?>" value="<?php echo $field['value'] ?>" />
+		</div>
 		<?php
 	}
 	
@@ -153,26 +116,33 @@ class acf_field_tags_input extends acf_field {
 	*  @return	n/a
 	*/
 
-	/*
+	
 	
 	function input_admin_enqueue_scripts() {
+	
+		// register ACF scripts
+		wp_register_script( 'jquery-tags-input', $this->settings['dir'] . 'js/jquery.tagsinput.min.js', array('jquery'));
+		wp_register_script( 'acf-input-tags_input', $this->settings['dir'] . 'js/input.js', array('acf-input'), $this->settings['version'] );
+		wp_register_style( 'jquery-tags-input', $this->settings['dir'] . 'css/jquery.tagsinput.css'); 
+		wp_register_style( 'acf-input-tags_input', $this->settings['dir'] . 'css/input.css', array('acf-input'), $this->settings['version'] ); 
 		
-		$dir = plugin_dir_url( __FILE__ );
 		
-		
-		// register & include JS
-		wp_register_script( 'acf-input-tags_input', "{$dir}js/input.js" );
-		wp_enqueue_script('acf-input-tags_input');
-		
-		
-		// register & include CSS
-		wp_register_style( 'acf-input-tags_input', "{$dir}css/input.css" ); 
-		wp_enqueue_style('acf-input-tags_input');
+		// scripts
+		wp_enqueue_script(array(
+			'jquery-tags-input',	
+			'acf-input-tags_input',	
+		));
+
+		// styles
+		wp_enqueue_style(array(
+			'jquery-tags-input',	
+			'acf-input-tags_input',	
+		));
 		
 		
 	}
 	
-	*/
+	
 	
 	
 	/*
@@ -340,15 +310,18 @@ class acf_field_tags_input extends acf_field {
 	*  @return	$value
 	*/
 	
-	/*
+	
 	
 	function update_value( $value, $post_id, $field ) {
 		
+		if(array($value))
+			$value = array_map('trim', explode(',', $value));
+
 		return $value;
 		
 	}
 	
-	*/
+	
 	
 	
 	/*

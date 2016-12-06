@@ -2,11 +2,11 @@
 	
 	
 	function initialize_field( $el ) {
-		
+
 		var $input 		= $el.find('.tags_input');
 		var placeholder = $input.attr('placeholder');
 
-		$el.find('.tags_input').tagsInput({
+		$input.tagsInput({
 			defaultText: placeholder
 		});
 	}
