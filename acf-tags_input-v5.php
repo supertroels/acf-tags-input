@@ -92,9 +92,9 @@ class acf_field_tags_input extends acf_field {
 	
 	function render_field( $field ) {
 
-	    if(is_array($field['value'])) {
-            $field['value'] = implode(',', $field['value']);
-        }
+      if (is_array($field['value'])) {
+        $field['value'] = implode(',', $field['value']);
+      }
 
 		?>
 		<div>
