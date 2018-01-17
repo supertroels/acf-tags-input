@@ -92,8 +92,10 @@ class acf_field_tags_input extends acf_field {
 	
 	function render_field( $field ) {
 
-		$field['value'] = implode(',', $field['value']);
-	
+	    if(is_array($field['value'])) {
+            $field['value'] = implode(',', $field['value']);
+        }
+
 		?>
 		<div>
 			<input type="text" placeholder="<?php echo $field['placeholder_text'] ?>" id="<?php echo $field['key']; ?>" class="tags_input <?php echo $field['class']; ?>" name="<?php echo $field['name']; ?>" value="<?php echo $field['value'] ?>" />
